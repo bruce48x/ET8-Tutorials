@@ -1,6 +1,7 @@
-﻿namespace ET.Game.Agar;
-
-public class AgarRoom: Entity, IAwake
+﻿namespace ET.Game.Agar
 {
-    public long RoomId;
+    public class AgarRoom: Entity, IAwake
+    {
+        public long RoomId;
+    }
 }

@@ -26,6 +26,8 @@ Unity/HybridCLRData
 #Unity/Assets
 Unity/Assets/Bundles/Code/*
 Unity/Assets/Bundles/AotDlls/*
+Unity/Assets/Packages/
+Unity/Assets/Packages.meta
 Unity/Assets/StreamingAssets/
 Unity/Assets/StreamingAssets.meta
 
@@ -51,3 +53,5 @@ obj/
 Publish/
 */Temp/
 */TestResults/
+.dotnet
+.nuget

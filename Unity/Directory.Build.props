@@ -6,5 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="Assets\Plugins\Share.SourceGenerator.dll" />
+    <Compile Remove="obj\**\*.cs" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
     <type fullname="CommandLine.ParserResultExtensions" preserve="all" />
     <type fullname="CommandLine.ParserResult`1" preserve="all" />
   </assembly>
-  <assembly fullname="MemoryPack">
+  <assembly fullname="MemoryPack.Core">
     <type fullname="MemoryPack.Formatters.ArrayFormatter`1" preserve="all" />
     <type fullname="MemoryPack.Formatters.DictionaryFormatter`2" preserve="all" />
     <type fullname="MemoryPack.Formatters.ListFormatter" preserve="all" />

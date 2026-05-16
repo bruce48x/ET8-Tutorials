@@ -37,7 +37,7 @@ MonoBehaviour:
   - System.dll
   - System.Core.dll
   - mscorlib.dll
-  - MemoryPack.dll
+  - MemoryPack.Core.dll
   - System.Runtime.CompilerServices.Unsafe.dll
   outputLinkFile: Scripts/Loader/Plugins/HybridCLR/Generated/link.xml
   outputAOTGenericReferenceFile: Scripts/Loader/Plugins/HybridCLR/Generated/AOTGenericReferences.cs
