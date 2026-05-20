@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace ET.Game.Agar
+namespace ET.Server.Agar
 {
     [EntitySystemOf(typeof(AgarRoom))]
     public static partial class AgarRoomSystem

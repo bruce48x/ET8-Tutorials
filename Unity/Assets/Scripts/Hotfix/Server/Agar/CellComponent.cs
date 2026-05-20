@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ET.Game.Agar
+namespace ET.Server.Agar
 {
     public class CellComponent : Entity, IAwake, IDestroy
     {

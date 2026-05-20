@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace ET.Game.Agar
+namespace ET.Server.Agar
 {
     public class Cell : Entity, IAwake<long, float2, float>
     {

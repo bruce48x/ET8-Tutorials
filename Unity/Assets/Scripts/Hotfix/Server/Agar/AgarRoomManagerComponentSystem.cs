@@ -1,4 +1,4 @@
-﻿namespace ET.Game.Agar
+﻿namespace ET.Server.Agar
 {
     [EntitySystemOf(typeof(AgarRoomManagerComponent))]
     public static partial class AgarRoomManagerComponentSystem
