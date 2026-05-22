@@ -16,6 +16,7 @@ namespace ET
         
         Demo,
         LockStep,
+        Agar,
     }
     
     public class Options: Singleton<Options>

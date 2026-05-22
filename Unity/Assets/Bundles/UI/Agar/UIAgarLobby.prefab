@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1431576037130298803}
   - component: {fileID: 114905074804487618}
   m_Layer: 5
-  m_Name: UILobby
+  m_Name: UIAgarLobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-  - key: EnterMap
+  - key: FindMatching
     gameObject: {fileID: 899722670427233733}
 --- !u!1 &899722670427233733
 GameObject:
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 1003519326168939849}
   - component: {fileID: 1003626380862230063}
   m_Layer: 5
-  m_Name: EnterMap
+  m_Name: FindMatching
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
