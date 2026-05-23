@@ -665,31 +665,6 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(InnerMessage.G2M_SessionDisconnect)]
-    public partial class G2M_SessionDisconnect : MessageObject, ILocationMessage
-    {
-        public static G2M_SessionDisconnect Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(G2M_SessionDisconnect), isFromPool) as G2M_SessionDisconnect;
-        }
-
-        [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.RpcId = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
     [Message(InnerMessage.ObjectQueryResponse)]
     public partial class ObjectQueryResponse : MessageObject, IResponse
     {
@@ -726,77 +701,6 @@ namespace ET
         }
     }
 
-    [MemoryPackable]
-    [Message(InnerMessage.M2M_UnitTransferRequest)]
-    [ResponseType(nameof(M2M_UnitTransferResponse))]
-    public partial class M2M_UnitTransferRequest : MessageObject, IRequest
-    {
-        public static M2M_UnitTransferRequest Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2M_UnitTransferRequest), isFromPool) as M2M_UnitTransferRequest;
-        }
-
-        [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        [MemoryPackOrder(1)]
-        public ActorId OldActorId { get; set; }
-
-        [MemoryPackOrder(2)]
-        public byte[] Unit { get; set; }
-
-        [MemoryPackOrder(3)]
-        public List<byte[]> Entitys { get; set; } = new();
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.RpcId = default;
-            this.OldActorId = default;
-            this.Unit = default;
-            this.Entitys.Clear();
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(InnerMessage.M2M_UnitTransferResponse)]
-    public partial class M2M_UnitTransferResponse : MessageObject, IResponse
-    {
-        public static M2M_UnitTransferResponse Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2M_UnitTransferResponse), isFromPool) as M2M_UnitTransferResponse;
-        }
-
-        [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        [MemoryPackOrder(1)]
-        public int Error { get; set; }
-
-        [MemoryPackOrder(2)]
-        public string Message { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.RpcId = default;
-            this.Error = default;
-            this.Message = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
     public static class InnerMessage
     {
         public const ushort ObjectQueryRequest = 20002;
@@ -818,9 +722,6 @@ namespace ET
         public const ushort ObjectGetResponse = 20018;
         public const ushort R2G_GetLoginKey = 20019;
         public const ushort G2R_GetLoginKey = 20020;
-        public const ushort G2M_SessionDisconnect = 20021;
-        public const ushort ObjectQueryResponse = 20022;
-        public const ushort M2M_UnitTransferRequest = 20023;
-        public const ushort M2M_UnitTransferResponse = 20024;
+        public const ushort ObjectQueryResponse = 20021;
     }
 }

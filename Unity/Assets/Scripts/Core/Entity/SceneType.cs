@@ -15,7 +15,6 @@ namespace ET
 		Map = 1 << 7,
 		Router = 1 << 8,
 		RouterManager = 1 << 9,
-		Robot = 1 << 10,
 		BenchmarkClient = 1 << 11,
 		BenchmarkServer = 1 << 12,
 		Match = 1 << 14,
@@ -24,9 +23,7 @@ namespace ET
 		Watcher = 1 << 19,
 
 		// 客户端
-		Demo = 1 << 30,
 		Current = 1L << 31,
-		DemoView = 1L << 34,
 		NetClient = 1L << 35,
 		Agar = 1L << 36,
 
