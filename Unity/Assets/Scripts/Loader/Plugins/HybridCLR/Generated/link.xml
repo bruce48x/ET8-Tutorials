@@ -173,7 +173,6 @@
     <type fullname="ET.IdGenerater" preserve="all" />
     <type fullname="ET.InvokeAttribute" preserve="all" />
     <type fullname="ET.KService" preserve="all" />
-    <type fullname="ET.LSEntitySystemOfAttribute" preserve="all" />
     <type fullname="ET.LateUpdateSystem`1" preserve="all" />
     <type fullname="ET.ListComponent`1" preserve="all" />
     <type fullname="ET.Log" preserve="all" />

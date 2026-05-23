@@ -15,8 +15,7 @@ namespace ET
         BenchmarkServer,
         
         Demo,
-        LockStep,
-        Agar,
+        Agar = 9,
     }
     
     public class Options: Singleton<Options>

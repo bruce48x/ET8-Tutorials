@@ -1,9 +1,9 @@
-﻿using System.Net;
+using ET.Server.Agar;
 
 namespace ET.Server
 {
-    [Invoke((long)SceneType.Map)]
-    public class FiberInit_Map: AInvokeHandler<FiberInit, ETTask>
+    [Invoke((long)SceneType.Match)]
+    public class FiberInit_Match: AInvokeHandler<FiberInit, ETTask>
     {
         public override async ETTask Handle(FiberInit fiberInit)
         {
@@ -13,9 +13,8 @@ namespace ET.Server
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
-            root.AddComponent<UnitComponent>();
-            root.AddComponent<AOIManagerComponent>();
-            root.AddComponent<RoomManagerComponent>();
+            root.AddComponent<AgarMatchComponent>();
+            root.AddComponent<AgarRoomManagerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
 
