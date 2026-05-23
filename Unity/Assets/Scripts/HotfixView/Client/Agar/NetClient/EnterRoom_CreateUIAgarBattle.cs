@@ -9,7 +9,8 @@ namespace ET
         {
             await UIHelper.Remove(scene, UIType.UIAgarMatching);
             await UIHelper.Remove(scene, UIType.UIAgarLobby);
-            await UIHelper.Create(scene, UIType.UIAgarBattle, UILayer.Mid);
+            UI battleUI = await UIHelper.Create(scene, UIType.UIAgarBattle, UILayer.Mid);
+            battleUI.GetComponent<UIAgarBattleComponent>()?.InitializeCountdown(args.EndTime);
         }
     }
 }

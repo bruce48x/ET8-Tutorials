@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Match2G_AgarMatchSuccess message)
         {
-            EventSystem.Instance.Publish(root, new EnterRoom());
+            EventSystem.Instance.Publish(root, new EnterRoom { EndTime = message.EndTime });
             await ETTask.CompletedTask;
         }
     }

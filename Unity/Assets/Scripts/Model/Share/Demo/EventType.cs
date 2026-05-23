@@ -43,5 +43,6 @@
 
     public struct EnterRoom
     {
+        public long EndTime;
     }
 }

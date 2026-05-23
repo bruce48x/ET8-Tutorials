@@ -83,15 +83,18 @@ namespace ET.Server.Agar
             List<long> allPlayerIds)
         {
             long roomId = IdGenerater.Instance.GenerateId();
-            AgarRoom room = self.Root().GetComponent<AgarRoomManagerComponent>().CreateRoom(roomId);
+            AgarRoomManagerComponent roomManagerComponent = self.Root().GetComponent<AgarRoomManagerComponent>();
+            AgarRoom room = roomManagerComponent.CreateRoom(roomId);
             room.RealPlayerIds.AddRange(realPlayerIds);
             room.AiPlayerIds.AddRange(aiPlayerIds);
             room.AllPlayerIds.AddRange(allPlayerIds);
 
-            foreach (long playerId in allPlayerIds)
+            foreach (long playerId in realPlayerIds)
             {
-                room.CreatePlayerCell(playerId);
+                roomManagerComponent.BindPlayerRoom(playerId, roomId);
             }
+
+            room.StartBattle();
 
             MessageLocationSenderComponent messageLocationSenderComponent = self.Root().GetComponent<MessageLocationSenderComponent>();
 
@@ -99,6 +102,7 @@ namespace ET.Server.Agar
             {
                 Match2G_AgarMatchSuccess matchSuccess = Match2G_AgarMatchSuccess.Create();
                 matchSuccess.RoomId = roomId;
+                matchSuccess.EndTime = room.EndTime;
                 messageLocationSenderComponent.Get(LocationType.Player).Send(playerId, matchSuccess);
             }
         }

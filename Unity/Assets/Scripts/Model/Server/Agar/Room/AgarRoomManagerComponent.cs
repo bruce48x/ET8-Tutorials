@@ -6,5 +6,6 @@ namespace ET.Server.Agar
     public class AgarRoomManagerComponent : Entity, IAwake, IDestroy
     {
         public readonly Dictionary<long, EntityRef<AgarRoom>> Rooms = new();
+        public readonly Dictionary<long, long> PlayerRoomIds = new();
     }
 }
