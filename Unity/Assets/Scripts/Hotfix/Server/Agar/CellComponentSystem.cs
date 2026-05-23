@@ -1,8 +1,9 @@
-﻿using Unity.Mathematics;
+using Unity.Mathematics;
 
 namespace ET.Server.Agar
 {
     [EntitySystemOf(typeof(CellComponent))]
+    [FriendOf(typeof(CellComponent))]
     public static partial class CellComponentSystem
     {
         [EntitySystem]
@@ -17,10 +18,10 @@ namespace ET.Server.Agar
         }
 
         public static Cell CreateCell(
-        this CellComponent self,
-        long ownerPlayerId,
-        float2 position,
-        float radius)
+            this CellComponent self,
+            long ownerPlayerId,
+            float2 position,
+            float radius)
         {
             Cell cell = self.AddChild<Cell, long, float2, float>(
                 ownerPlayerId,
@@ -33,16 +34,18 @@ namespace ET.Server.Agar
 
         public static void RemoveCell(this CellComponent self, long cellId)
         {
-            if (!self.Cells.Remove(cellId, out Cell cell))
+            if (!self.Cells.Remove(cellId, out EntityRef<Cell> cellRef))
             {
                 return;
             }
 
+            Cell cell = cellRef;
             cell.Dispose();
         }
     }
 
     [EntitySystemOf(typeof(Cell))]
+    [FriendOf(typeof(Cell))]
     public static partial class CellSystem
     {
         [EntitySystem]

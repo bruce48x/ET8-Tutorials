@@ -1,6 +1,8 @@
-﻿namespace ET.Server.Agar
+namespace ET.Server.Agar
 {
     [EntitySystemOf(typeof(AgarRoomManagerComponent))]
+    [FriendOf(typeof(AgarRoomManagerComponent))]
+    [FriendOf(typeof(AgarRoom))]
     public static partial class AgarRoomManagerComponentSystem
     {
         [EntitySystem]
@@ -27,7 +29,7 @@
 
         public static AgarRoom GetRoom(this AgarRoomManagerComponent self, long roomId)
         {
-            self.Rooms.TryGetValue(roomId, out AgarRoom room);
+            self.Rooms.TryGetValue(roomId, out EntityRef<AgarRoom> room);
             return room;
         }
     }

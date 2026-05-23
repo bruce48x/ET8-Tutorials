@@ -1,7 +1,8 @@
-﻿using Unity.Mathematics;
+using Unity.Mathematics;
 
 namespace ET.Server.Agar
 {
+    [ChildOf(typeof(CellComponent))]
     public class Cell : Entity, IAwake<long, float2, float>
     {
         public long OwnerPlayerId;

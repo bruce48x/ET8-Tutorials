@@ -1,4 +1,5 @@
-﻿using System.Net;
+using System.Net;
+using ET.Server.Agar;
 
 namespace ET.Server
 {
@@ -14,6 +15,8 @@ namespace ET.Server
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
             root.AddComponent<MatchComponent>();
+            root.AddComponent<AgarMatchComponent>();
+            root.AddComponent<AgarRoomManagerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
 
