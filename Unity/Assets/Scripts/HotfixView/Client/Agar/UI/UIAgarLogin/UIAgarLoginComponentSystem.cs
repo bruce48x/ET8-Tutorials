@@ -22,7 +22,7 @@ namespace ET.Client
 
         public static void OnLogin(this UIAgarLoginComponent self)
         {
-            LoginHelper.Login(self.Root(), self.account.GetComponent<InputField>().text, self.password.GetComponent<InputField>().text);
+            LoginHelper.Login(self.Root(), self.account.GetComponent<InputField>().text, self.password.GetComponent<InputField>().text).Coroutine();
         }
     }
 }
