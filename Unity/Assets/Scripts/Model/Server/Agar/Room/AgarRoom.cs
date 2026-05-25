@@ -23,5 +23,6 @@ namespace ET.Server.Agar
         public readonly List<long> RealPlayerIds = new();
         public readonly List<long> AiPlayerIds = new();
         public readonly List<long> AllPlayerIds = new();
+        public readonly Dictionary<long, string> RealPlayerAccounts = new();
     }
 }

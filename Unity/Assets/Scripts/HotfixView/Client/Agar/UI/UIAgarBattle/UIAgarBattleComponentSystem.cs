@@ -53,6 +53,7 @@ namespace ET
         {
             self.BattleEndTime = endTime;
             self.IsBattleFinished = false;
+            self.ReturnToLobbyScheduled = false;
             self.UpdateCountdown();
         }
 
@@ -91,12 +92,17 @@ namespace ET
 
             long remainingTime = self.BattleEndTime - TimeInfo.Instance.ServerNow();
             self.SetCountdownText(remainingTime);
+            if (remainingTime <= 0)
+            {
+                self.IsBattleFinished = true;
+                self.ScheduleReturnToLobby(2000);
+            }
         }
 
         private static void SetCountdownText(this UIAgarBattleComponent self, long remainingTime)
         {
             long seconds = remainingTime > 0 ? (remainingTime + 999) / 1000 : 0;
-            self.SetText(self.txtTime, $"Countdown {seconds}s");
+            self.SetText(self.txtTime, $"倒计时 {seconds}s");
         }
 
         private static void UpdateMoveInput(this UIAgarBattleComponent self)
@@ -286,7 +292,7 @@ namespace ET
             rectTransform.sizeDelta = new Vector2(420f, 64f);
 
             Text text = textObject.AddComponent<Text>();
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             text.fontSize = name == "TxtResult" ? 40 : 24;
             text.alignment = alignment;
             text.color = Color.white;
@@ -365,6 +371,27 @@ namespace ET
             {
                 uiText.text = text;
             }
+        }
+
+        public static void ScheduleReturnToLobby(this UIAgarBattleComponent self, long delayMilliseconds)
+        {
+            if (self.ReturnToLobbyScheduled)
+            {
+                return;
+            }
+
+            self.ReturnToLobbyScheduled = true;
+            self.ReturnToLobbyAsync(delayMilliseconds).Coroutine();
+        }
+
+        private static async ETTask ReturnToLobbyAsync(this UIAgarBattleComponent self, long delayMilliseconds)
+        {
+            Scene root = self.Root();
+            await root.GetComponent<TimerComponent>().WaitAsync(delayMilliseconds);
+            await UIHelper.Remove(root, UIType.UIAgarBattle);
+            await UIHelper.Remove(root, UIType.UIAgarMatching);
+            await UIHelper.Remove(root, UIType.UIAgarLobby);
+            await UIHelper.Create(root, UIType.UIAgarLobby, UILayer.Mid);
         }
     }
 }

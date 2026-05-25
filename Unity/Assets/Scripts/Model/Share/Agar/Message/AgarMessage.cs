@@ -137,6 +137,71 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(AgarOuter.C2G_AgarPlayerStats)]
+    [ResponseType(nameof(G2C_AgarPlayerStats))]
+    public partial class C2G_AgarPlayerStats : MessageObject, ISessionRequest
+    {
+        public static C2G_AgarPlayerStats Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_AgarPlayerStats), isFromPool) as C2G_AgarPlayerStats;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(AgarOuter.G2C_AgarPlayerStats)]
+    public partial class G2C_AgarPlayerStats : MessageObject, ISessionResponse
+    {
+        public static G2C_AgarPlayerStats Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_AgarPlayerStats), isFromPool) as G2C_AgarPlayerStats;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long TotalMatches { get; set; }
+
+        [MemoryPackOrder(4)]
+        public long WinMatches { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.TotalMatches = default;
+            this.WinMatches = default;
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(AgarOuter.Match2G_AgarMatchSuccess)]
     public partial class Match2G_AgarMatchSuccess : MessageObject, IMessage
     {
@@ -300,6 +365,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public long PlayerId { get; set; }
 
+        [MemoryPackOrder(2)]
+        public string PlayerAccount { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -309,6 +377,7 @@ namespace ET
 
             this.RpcId = default;
             this.PlayerId = default;
+            this.PlayerAccount = default;
             ObjectPool.Instance.Recycle(this);
         }
     }
@@ -387,6 +456,8 @@ namespace ET
         public const ushort Match2G_AgarBattleState = 12007;
         public const ushort Match2G_AgarBattleResult = 12008;
         public const ushort C2G_AgarMove = 12009;
+        public const ushort C2G_AgarPlayerStats = 12010;
+        public const ushort G2C_AgarPlayerStats = 12011;
     }
 
     public static class AgarInner

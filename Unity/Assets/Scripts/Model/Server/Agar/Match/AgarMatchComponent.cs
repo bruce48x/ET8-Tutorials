@@ -14,6 +14,7 @@ namespace ET.Server.Agar
     public class AgarMatchPlayer
     {
         public long PlayerId;
+        public string Account;
         public long JoinTime;
     }
 }

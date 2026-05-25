@@ -18,6 +18,7 @@ namespace ET.Client
         public long BattleEndTime;
         public float CurrentScore;
         public bool IsBattleFinished;
+        public bool ReturnToLobbyScheduled;
         public readonly Dictionary<long, GameObject> CellViews = new();
     }
 }

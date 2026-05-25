@@ -13,6 +13,7 @@ namespace ET.Server
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
+            root.AddComponent<DBManagerComponent>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<GateSessionKeyComponent>();
             root.AddComponent<LocationProxyComponent>();

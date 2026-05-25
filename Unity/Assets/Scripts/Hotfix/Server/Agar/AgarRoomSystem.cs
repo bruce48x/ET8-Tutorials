@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 
@@ -26,6 +27,7 @@ namespace ET.Server.Agar
             self.RealPlayerIds.Clear();
             self.AiPlayerIds.Clear();
             self.AllPlayerIds.Clear();
+            self.RealPlayerAccounts.Clear();
         }
 
         public static void StartBattle(this AgarRoom self)
@@ -84,7 +86,7 @@ namespace ET.Server.Agar
 
             if (now >= self.EndTime || self.GetAlivePlayerCount() <= 1)
             {
-                self.FinishBattle();
+                self.FinishBattle().Coroutine();
             }
         }
 
@@ -290,7 +292,7 @@ namespace ET.Server.Agar
             }
         }
 
-        private static void FinishBattle(this AgarRoom self)
+        private static async ETTask FinishBattle(this AgarRoom self)
         {
             if (self.IsFinished)
             {
@@ -301,6 +303,7 @@ namespace ET.Server.Agar
             List<AgarPlayerScoreInfo> rankings = new();
             self.FillRankings(rankings);
             AgarPlayerScoreInfo winner = rankings.Count > 0 ? rankings[0] : null;
+            await self.PersistBattleStats(winner?.PlayerId ?? 0);
 
             foreach (long playerId in self.RealPlayerIds)
             {
@@ -316,6 +319,33 @@ namespace ET.Server.Agar
             }
 
             self.Root().GetComponent<AgarRoomManagerComponent>().RemoveRoom(self.RoomId);
+        }
+
+        private static async ETTask PersistBattleStats(this AgarRoom self, long winnerPlayerId)
+        {
+            Scene root = self.Root();
+            int zone = self.Zone();
+            List<KeyValuePair<long, string>> playerAccounts = new(self.RealPlayerAccounts);
+
+            try
+            {
+                DBManagerComponent dbManagerComponent = root.GetComponent<DBManagerComponent>();
+                if (dbManagerComponent == null)
+                {
+                    Log.Warning("Agar battle stats persist skipped: DBManagerComponent not found");
+                    return;
+                }
+
+                DBComponent dbComponent = dbManagerComponent.GetZoneDB(zone);
+                foreach ((long playerId, string account) in playerAccounts)
+                {
+                    await dbComponent.RecordMatchResult(account, playerId == winnerPlayerId);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Agar battle stats persist failed: {e}");
+            }
         }
 
         private static void FillRankings(this AgarRoom self, List<AgarPlayerScoreInfo> rankings)

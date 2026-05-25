@@ -24,7 +24,7 @@ namespace ET.Server.Agar
             self.WaitPlayers.Clear();
         }
 
-        public static void Match(this AgarMatchComponent self, long playerId)
+        public static void Match(this AgarMatchComponent self, long playerId, string account)
         {
             foreach (AgarMatchPlayer matchPlayer in self.WaitPlayers)
             {
@@ -37,6 +37,7 @@ namespace ET.Server.Agar
             self.WaitPlayers.Add(new AgarMatchPlayer
             {
                 PlayerId = playerId,
+                Account = account,
                 JoinTime = TimeInfo.Instance.ServerNow()
             });
 
@@ -58,9 +59,12 @@ namespace ET.Server.Agar
             }
 
             List<long> realPlayerIds = new();
+            Dictionary<long, string> realPlayerAccounts = new();
             while (realPlayerIds.Count < AgarMatchComponent.MatchPlayerCount && self.WaitPlayers.Count > 0)
             {
-                realPlayerIds.Add(self.WaitPlayers[0].PlayerId);
+                AgarMatchPlayer matchPlayer = self.WaitPlayers[0];
+                realPlayerIds.Add(matchPlayer.PlayerId);
+                realPlayerAccounts[matchPlayer.PlayerId] = matchPlayer.Account;
                 self.WaitPlayers.RemoveAt(0);
             }
 
@@ -73,14 +77,15 @@ namespace ET.Server.Agar
                 allPlayerIds.Add(aiPlayerId);
             }
 
-            self.StartAgarRoom(realPlayerIds, aiPlayerIds, allPlayerIds);
+            self.StartAgarRoom(realPlayerIds, aiPlayerIds, allPlayerIds, realPlayerAccounts);
         }
 
         private static void StartAgarRoom(
             this AgarMatchComponent self,
             List<long> realPlayerIds,
             List<long> aiPlayerIds,
-            List<long> allPlayerIds)
+            List<long> allPlayerIds,
+            Dictionary<long, string> realPlayerAccounts)
         {
             long roomId = IdGenerater.Instance.GenerateId();
             AgarRoomManagerComponent roomManagerComponent = self.Root().GetComponent<AgarRoomManagerComponent>();
@@ -92,6 +97,7 @@ namespace ET.Server.Agar
             foreach (long playerId in realPlayerIds)
             {
                 roomManagerComponent.BindPlayerRoom(playerId, roomId);
+                room.RealPlayerAccounts[playerId] = realPlayerAccounts[playerId];
             }
 
             room.StartBattle();

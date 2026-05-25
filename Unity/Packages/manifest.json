@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.code-philosophy.hybridclr": "8.11.0",
-    "com.coplaydev.unity-mcp": "9.6.8",
+    "com.coplaydev.unity-mcp": "9.7.1",
     "com.github-glitchenzo.nugetforunity": "4.5.0",
     "com.tuyoogame.yooasset": "2.1.1",
     "com.unity.ai.navigation": "1.1.7",

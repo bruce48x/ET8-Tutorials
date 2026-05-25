@@ -10,6 +10,7 @@ namespace ET.Server
 
             G2Match_AgarMatch g2MatchAgarMatch = G2Match_AgarMatch.Create();
             g2MatchAgarMatch.PlayerId = player.Id;
+            g2MatchAgarMatch.PlayerAccount = player.Account;
             await session.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, g2MatchAgarMatch);
         }
     }

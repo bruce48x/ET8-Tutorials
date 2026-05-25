@@ -9,14 +9,14 @@ namespace ET
         {
             UI battleUI = root.GetComponent<UIComponent>()?.Get(UIType.UIAgarBattle);
             UIAgarBattleComponent battleComponent = battleUI?.GetComponent<UIAgarBattleComponent>();
-            battleComponent?.RefreshBattleResult(message);
+            if (battleComponent == null)
+            {
+                return;
+            }
 
-            await root.GetComponent<TimerComponent>().WaitAsync(2000);
-
-            await UIHelper.Remove(root, UIType.UIAgarBattle);
-            await UIHelper.Remove(root, UIType.UIAgarMatching);
-            await UIHelper.Remove(root, UIType.UIAgarLobby);
-            await UIHelper.Create(root, UIType.UIAgarLobby, UILayer.Mid);
+            battleComponent.RefreshBattleResult(message);
+            battleComponent.ScheduleReturnToLobby(2000);
+            await ETTask.CompletedTask;
         }
     }
 }

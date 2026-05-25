@@ -6,5 +6,7 @@ namespace ET.Client
     public class UIAgarLobbyComponent : Entity, IAwake
     {
         public GameObject findMatchingBtn;
+        public GameObject totalMatchesText;
+        public GameObject winMatchesText;
     }
 }

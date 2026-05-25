@@ -7,7 +7,7 @@ namespace ET.Server
     {
         protected override async ETTask Run(Scene scene, G2Match_AgarMatch request, Match2G_AgarMatch response)
         {
-            scene.GetComponent<AgarMatchComponent>().Match(request.PlayerId);
+            scene.GetComponent<AgarMatchComponent>().Match(request.PlayerId, request.PlayerAccount);
             await ETTask.CompletedTask;
         }
     }

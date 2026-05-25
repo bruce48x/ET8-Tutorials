@@ -26,6 +26,11 @@ namespace ET
 				.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
 				.WithParsed((o)=>World.Instance.AddSingleton(o));
 			Options.Instance.StartConfig = $"StartConfig/Localhost";
+			GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
+			if (globalConfig != null)
+			{
+				Options.Instance.AppType = globalConfig.AppType;
+			}
 			
 			World.Instance.AddSingleton<Logger>().Log = new UnityLogger();
 			ETTask.ExceptionHandler += Log.Error;
