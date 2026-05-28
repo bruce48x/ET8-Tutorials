@@ -31,6 +31,9 @@ Docs/教程/06-客户端开发入门.md
 Docs/教程/07-服务端运行模型.md
 Docs/教程/08-部署打包与集群运维.md
 Docs/教程/09-深入ET原理：ETTask与Task.md
+Docs/教程/10-客户端如何热更.md
+Docs/教程/11-服务端如何热更.md
+Docs/教程/12-深入ET原理：热更.md
 ```
 
 `Docs/开发指南.md` should stop being the main long-form tutorial. It should become a short entry page that links to `Docs/教程/00-教程索引.md`, or remain as a legacy guide with a clear note pointing new readers to the tutorial set.
@@ -93,6 +96,18 @@ Explain why ET uses `ETTask`, how it fits single-threaded fiber-style async code
 
 This document also establishes the naming pattern for future advanced ET internals tutorials: use `深入ET原理：<子主题>` as the title format.
 
+`10-客户端如何热更.md`
+
+Explain the practical client hot update workflow for newcomers: which assemblies are hotfix assemblies, how `ET/Compile` produces `.dll.bytes`, how the client loads code from `Assets/Bundles/Code`, what HybridCLR contributes, and what changes require rebuilding the app instead of only updating hotfix code. Use `Unity/Assets/Scripts/Loader/CodeLoader.cs`, `Unity/Assets/Scripts/Editor/Assembly/AssemblyTool.cs`, `Unity/Assets/Scripts/Editor/Plugins/HybridCLR/HybridCLREditor.cs`, `Unity/Assets/Bundles/Code/`, and `Unity/Assets/Bundles/AotDlls/` as examples.
+
+`11-服务端如何热更.md`
+
+Explain the practical server hot update workflow: server runtime loads `Hotfix.dll`, reload uses `CodeLoader.Reload()`, `CodeTypes` is rebuilt, and existing long-lived state must be treated carefully. Use `DotNet/Loader/CodeLoader.cs`, `DotNet/Hotfix/DotNet.Hotfix.csproj`, `Unity/Assets/Scripts/Hotfix/Share/Module/Console/ReloadDllConsoleHandler.cs`, `M2A_Reload`/`A2M_Reload`, and server startup files as examples.
+
+`12-深入ET原理：热更.md`
+
+Explain the underlying hot update model across client and server: stable assemblies vs hotfix assemblies, why ET splits `Model`/`Hotfix` and `ModelView`/`HotfixView`, how reflection-based entry and `CodeTypes` discovery work, why client and server hot update mechanisms are different, and the limits of reloading code when object instances already exist.
+
 ## Question Mapping
 
 The user-provided questions should be covered as follows:
@@ -104,6 +119,9 @@ The user-provided questions should be covered as follows:
 服务端如何推送通知 -> 05
 服务端如何广播 -> 05
 ETTask 相比 Task 的优缺点 -> 09
+客户端如何热更 -> 10
+服务端如何热更 -> 11
+深入ET原理：热更 -> 12
 如何创建新窗口 -> 06
 如何切换场景 -> 06
 代码如何生成 -> 04 and 06
@@ -128,10 +146,15 @@ Unity/Assets/Scripts/Hotfix/Client/Agar/NetClient/
 Unity/Assets/Scripts/HotfixView/Client/Agar/
 Unity/Assets/Scripts/ModelView/Client/Agar/
 Unity/Assets/Scripts/Hotfix/Server/Agar/
+Unity/Assets/Scripts/Loader/CodeLoader.cs
+Unity/Assets/Scripts/Editor/Assembly/AssemblyTool.cs
+Unity/Assets/Scripts/Editor/Plugins/HybridCLR/HybridCLREditor.cs
+Unity/Assets/Scripts/Hotfix/Share/Module/Console/
 Unity/Assets/Scripts/Core/World/Module/Options/Options.cs
 Config/Json/s/StartConfig/
 DotNet/App/Program.cs
 DotNet/Loader/
+DotNet/Hotfix/DotNet.Hotfix.csproj
 Publish-linux-x64.ps1
 Book/
 ```
