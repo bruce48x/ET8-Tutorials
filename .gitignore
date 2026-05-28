@@ -41,6 +41,7 @@ WebGL
 #其他
 .objs/
 .DS_Store
+Docs/superpowers/
 /*.user
 bin/
 Bin/
