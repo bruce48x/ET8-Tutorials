@@ -12,31 +12,41 @@ The tutorials should assume the reader does not yet understand ET-specific terms
 
 ## Documentation Structure
 
-Create a new tutorial directory:
+Create a new tutorial root directory with two independently numbered series:
 
 ```text
 Docs/教程/
+Docs/教程/新手教程/
+Docs/教程/深入ET原理/
 ```
 
-The tutorial set should contain these numbered documents:
+The newcomer tutorial series should contain these numbered documents:
 
 ```text
-Docs/教程/00-教程索引.md
-Docs/教程/01-ET项目整体结构.md
-Docs/教程/02-客户端如何连接服务端.md
-Docs/教程/03-一次请求的完整链路.md
-Docs/教程/04-新增接口和DTO.md
-Docs/教程/05-服务端推送与广播.md
-Docs/教程/06-客户端开发入门.md
-Docs/教程/07-服务端运行模型.md
-Docs/教程/08-部署打包与集群运维.md
-Docs/教程/09-深入ET原理：ETTask与Task.md
-Docs/教程/10-客户端如何热更.md
-Docs/教程/11-服务端如何热更.md
-Docs/教程/12-深入ET原理：热更.md
+Docs/教程/新手教程/00-教程索引.md
+Docs/教程/新手教程/01-ET项目整体结构.md
+Docs/教程/新手教程/02-客户端如何连接服务端.md
+Docs/教程/新手教程/03-一次请求的完整链路.md
+Docs/教程/新手教程/04-新增接口和DTO.md
+Docs/教程/新手教程/05-服务端推送与广播.md
+Docs/教程/新手教程/06-客户端开发入门.md
+Docs/教程/新手教程/07-服务端运行模型.md
+Docs/教程/新手教程/08-部署打包与集群运维.md
+Docs/教程/新手教程/09-客户端如何热更.md
+Docs/教程/新手教程/10-服务端如何热更.md
 ```
 
-`Docs/开发指南.md` should stop being the main long-form tutorial. It should become a short entry page that links to `Docs/教程/00-教程索引.md`, or remain as a legacy guide with a clear note pointing new readers to the tutorial set.
+The advanced ET internals series should contain its own index and numbering:
+
+```text
+Docs/教程/深入ET原理/00-深入ET原理索引.md
+Docs/教程/深入ET原理/01-ETTask与Task.md
+Docs/教程/深入ET原理/02-热更.md
+```
+
+Future advanced internals tutorials should be added under `Docs/教程/深入ET原理/` and continue that series' own numbering.
+
+`Docs/开发指南.md` should stop being the main long-form tutorial. It should become a short entry page that links to `Docs/教程/新手教程/00-教程索引.md`, or remain as a legacy guide with a clear note pointing new readers to the tutorial set.
 
 ## Shared Writing Pattern
 
@@ -90,21 +100,23 @@ Explain that the service runtime is a dotnet process, not Unity Editor. Cover `D
 
 Explain how ET start configs define machines, processes, zones, and scenes; how packaging currently works; how startup and shutdown are expected to work; what the watcher process is for; how crashes should be handled; and what can be monitored. Use `Config/Json/s/StartConfig/*`, `Publish-linux-x64.ps1`, and watcher-related server modules as examples.
 
-`09-深入ET原理：ETTask与Task.md`
-
-Explain why ET uses `ETTask`, how it fits single-threaded fiber-style async code, what is better than plain `Task`, and what tradeoffs or pitfalls newcomers should know. Use examples from project code where methods return `ETTask`.
-
-This document also establishes the naming pattern for future advanced ET internals tutorials: use `深入ET原理：<子主题>` as the title format.
-
-`10-客户端如何热更.md`
+`Docs/教程/新手教程/09-客户端如何热更.md`
 
 Explain the practical client hot update workflow for newcomers: which assemblies are hotfix assemblies, how `ET/Compile` produces `.dll.bytes`, how the client loads code from `Assets/Bundles/Code`, what HybridCLR contributes, and what changes require rebuilding the app instead of only updating hotfix code. Use `Unity/Assets/Scripts/Loader/CodeLoader.cs`, `Unity/Assets/Scripts/Editor/Assembly/AssemblyTool.cs`, `Unity/Assets/Scripts/Editor/Plugins/HybridCLR/HybridCLREditor.cs`, `Unity/Assets/Bundles/Code/`, and `Unity/Assets/Bundles/AotDlls/` as examples.
 
-`11-服务端如何热更.md`
+`Docs/教程/新手教程/10-服务端如何热更.md`
 
 Explain the practical server hot update workflow: server runtime loads `Hotfix.dll`, reload uses `CodeLoader.Reload()`, `CodeTypes` is rebuilt, and existing long-lived state must be treated carefully. Use `DotNet/Loader/CodeLoader.cs`, `DotNet/Hotfix/DotNet.Hotfix.csproj`, `Unity/Assets/Scripts/Hotfix/Share/Module/Console/ReloadDllConsoleHandler.cs`, `M2A_Reload`/`A2M_Reload`, and server startup files as examples.
 
-`12-深入ET原理：热更.md`
+`Docs/教程/深入ET原理/00-深入ET原理索引.md`
+
+Explain the purpose of the advanced internals series, list the available advanced topics, and remind readers that these documents explain mechanisms and tradeoffs rather than day-to-day development steps.
+
+`Docs/教程/深入ET原理/01-ETTask与Task.md`
+
+Explain why ET uses `ETTask`, how it fits single-threaded fiber-style async code, what is better than plain `Task`, and what tradeoffs or pitfalls newcomers should know. Use examples from project code where methods return `ETTask`.
+
+`Docs/教程/深入ET原理/02-热更.md`
 
 Explain the underlying hot update model across client and server: stable assemblies vs hotfix assemblies, why ET splits `Model`/`Hotfix` and `ModelView`/`HotfixView`, how reflection-based entry and `CodeTypes` discovery work, why client and server hot update mechanisms are different, and the limits of reloading code when object instances already exist.
 
@@ -118,10 +130,10 @@ The user-provided questions should be covered as follows:
 创建新接口、新 DTO -> 04
 服务端如何推送通知 -> 05
 服务端如何广播 -> 05
-ETTask 相比 Task 的优缺点 -> 09
-客户端如何热更 -> 10
-服务端如何热更 -> 11
-深入ET原理：热更 -> 12
+ETTask 相比 Task 的优缺点 -> 深入ET原理/01
+客户端如何热更 -> 新手教程/09
+服务端如何热更 -> 新手教程/10
+深入ET原理：热更 -> 深入ET原理/02
 如何创建新窗口 -> 06
 如何切换场景 -> 06
 代码如何生成 -> 04 and 06
