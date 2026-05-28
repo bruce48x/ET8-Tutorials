@@ -30,7 +30,7 @@ Docs/教程/05-服务端推送与广播.md
 Docs/教程/06-客户端开发入门.md
 Docs/教程/07-服务端运行模型.md
 Docs/教程/08-部署打包与集群运维.md
-Docs/教程/09-ETTask与Task.md
+Docs/教程/09-深入ET原理：ETTask与Task.md
 ```
 
 `Docs/开发指南.md` should stop being the main long-form tutorial. It should become a short entry page that links to `Docs/教程/00-教程索引.md`, or remain as a legacy guide with a clear note pointing new readers to the tutorial set.
@@ -87,9 +87,11 @@ Explain that the service runtime is a dotnet process, not Unity Editor. Cover `D
 
 Explain how ET start configs define machines, processes, zones, and scenes; how packaging currently works; how startup and shutdown are expected to work; what the watcher process is for; how crashes should be handled; and what can be monitored. Use `Config/Json/s/StartConfig/*`, `Publish-linux-x64.ps1`, and watcher-related server modules as examples.
 
-`09-ETTask与Task.md`
+`09-深入ET原理：ETTask与Task.md`
 
 Explain why ET uses `ETTask`, how it fits single-threaded fiber-style async code, what is better than plain `Task`, and what tradeoffs or pitfalls newcomers should know. Use examples from project code where methods return `ETTask`.
+
+This document also establishes the naming pattern for future advanced ET internals tutorials: use `深入ET原理：<子主题>` as the title format.
 
 ## Question Mapping
 
